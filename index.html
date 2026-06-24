@@ -75,27 +75,14 @@ const PERMS = {
 const can = (role, action) => !!PERMS[role]?.includes(action);
 const uid = (p = "id") => `${p}_${Math.random().toString(36).slice(2, 9)}`;
 function seedData() {
-  const c1 = uid("cat"), c2 = uid("cat"), c3 = uid("cat"), c4 = uid("cat");
-  const categories = [
-    { id: c1, name: "Mylar Bags", subs: [
-      { id: uid("sub"), name: "Stand-up Pouches" },
-      { id: uid("sub"), name: "Flat Pouches" },
-      { id: uid("sub"), name: "Child-Resistant" }
-    ] },
-    { id: c2, name: "Custom Boxes", subs: [
-      { id: uid("sub"), name: "Cosmetic Boxes" },
-      { id: uid("sub"), name: "Tuck Boxes" },
-      { id: uid("sub"), name: "CBD Boxes" }
-    ] },
-    { id: c3, name: "Labels", subs: [
-      { id: uid("sub"), name: "Roll Labels" },
-      { id: uid("sub"), name: "Sheet Labels" }
-    ] },
-    { id: c4, name: "Food Packaging", subs: [
-      { id: uid("sub"), name: "EZ Peel Pouches" },
-      { id: uid("sub"), name: "Blister Packs" }
-    ] }
-  ];
+  const CATS = ["Custom Boxes", "Custom Mylar Bags", "Custom Labels & Stickers", "Printing Products"];
+  const PRODUCT_NAMES = {
+    "Custom Boxes": ["Cannabis Cigarette Boxes", "Burger Boxes", "Custom Product Boxes", "Tincture Boxes", "Custom Vape Box", "Pre Roll Boxes", "Wine Shipping Boxes", "Folding Cartons", "Book Style Boxes", "E-Cigarette Boxes", "Popcorn Boxes", "Eyeliner Boxes", "Textured Boxes", "Holographic Foiling Boxes", "Chocolate Boxes", "Gold Foil Boxes", "Jewelry Boxes", "Mascara Boxes", "Lipstick Boxes", "Jelly Boxes", "Nail Polish Boxes", "Square Boxes", "Lotion Boxes", "Candle Boxes", "Gift Boxes", "Display Boxes", "Macaron Boxes", "Roll End Boxes", "Gable Boxes", "Cardboard Box", "Seal End Boxes", "Clothing Boxes", "Compact Box", "CBD Gummies Packaging", "Sleeve Boxes", "Box With Window", "Dispenser Boxes", "Advertising Boxes", "Pillow Boxes", "Eyeshadow Boxes", "Rigid Boxes", "Candy Boxes", "Cosmetic Boxes", "Shirt Boxes", "Side Lock Tuck Top Display Box", "Contact Lens Boxes", "Reverse Tuck End Boxes", "Beard Oil Box", "Watch Boxes", "Tuck Boxes", "Snap Lock Bottom Boxes", "Auto Lock Bottom Boxes", "Playing Card Box", "Lip Gloss Boxes", "CBD Vape Juice Packaging", "Cosmetic Display Boxes", "Straight Tuck End Boxes", "Custom Cannabis Packaging", "Soap Boxes", "Cell Phone Accessories Packaging", "Counter Display Boxes", "Cake Boxes", "E-Liquid Boxes", "Tie Boxes", "Pop Display Box Auto Bottom", "Noodle Boxes", "Cannabis Oil Boxes", "Metalized Boxes", "Custom Triangle Slice Box", "Custom Medical Box With Insert", "Underwear Packaging", "Medicine Packaging Boxes", "Wallet Boxes", "Cake Pop Boxes", "CBD Cream Boxes", "Perfume Boxes", "Cigar Packaging", "Lip Balm Boxes", "Medicine Boxes", "Cereal Boxes", "Rigid Two-Piece Boxes", "Chocolate Overlapping Lid Box", "CBD Boxes", "Food Product Sleeves", "Custom Boxes With Lid", "Display Box With Logo", "Cupcake Boxes", "Dietary Supplement Packaging", "Luxury Clothing Packaging", "Sock Packaging Box", "Muffin Boxes", "Pie Boxes", "Cookie Boxes", "Foundation Boxes", "Custom Shaped Boxes", "Food Gift Box", "Mailer Boxes", "Hemp Boxes", "Torch Boxes", "Pop Counter Display Tray", "Bakery Boxes", "Truffle Boxes", "Dessert Boxes", "Eyelash Boxes", "Comic Book Boxes", "Envelope Chocolate Box", "Display Boxes With Insert", "Tea Boxes", "Blister Packaging Boxes", "CBD Oil Packaging", "Display Boxes With Divider", "Frozen Food Packaging Box", "Wax Boxes", "Pastry Boxes", "Pill Packaging Boxes", "Pet Food Box", "Custom Anklet Boxes", "Donut Boxes", "Custom Product Display Box", "Tea Tray And Lid Gift Boxes", "PR Boxes", "Rack Display Boxes", "Pharmaceutical Patch Box", "Scar Gel Box", "Vape Box With Window", "Vape Product Hanger Box", "Christmas Chocolate Boxes", "Multi Patterned Lab Box", "Christmas Gift Boxes", "Christmas Gable Boxes", "Christmas Cookie Boxes", "Christmas Present Boxes", "Double Tea Box With Magnetic Closure", "Christmas Mailing Boxes", "Custom Take Out Boxes With Vents", "Dental Box With Insert", "Custom Hoodie Packaging", "CBD Bottle Boxes", "Custom Nutrition Packaging Box", "Multi Colored Dental Box", "Christmas Pillow Boxes", "Christmas Cupcake Boxes", "Custom Match Boxes", "Christmas Santa Claus Gift Boxes", "Cannabis Chocolate Packaging Boxes", "Cannabis Box With Gold Foil", "Christmas Treat Boxes", "Custom Marijuana Edible Packaging Box", "Custom Apparel Boxes", "Standard Green Tea Boxes", "Custom Towel Packaging Boxes", "Christmas Favor Boxes", "Food Supplement Packaging Box", "Tea Bag Dispenser", "CBD Display Boxes", "Window Christmas Boxes", "Christmas Candy Boxes", "Athletic Sleeve Packaging"],
+    "Custom Mylar Bags": ["Printed Pouches", "CBD Mylar Bag", "Eco Friendly Pouches", "Flat Pouches", "CBD Gummy Mylar Bags", "Spout Pouches", "Flat Bottom Pouches", "Customized Nuts Pouch", "Biodegradable Standup Pouch", "Roll Stocks", "Custom Pouches", "Custom Vape Cartridge Pouches", "Chocolate Mylar Bag", "Custom Smell Proof Weed Bags", "Child Resistant Pouches", "Vape Pouches", "Custom Snacks Standup Pouches", "Stand Up Pouch", "3 Side Seal Pouches", "Inside Printed Pouches", "Coffee Bags", "Frozen Food Pouch", "Hemp Flower Mylar Bag", "Christmas Gift Bags", "Christmas Mylar Bags", "Pre Roll Mylar Bags", "Weed Mylar Bags"],
+    "Custom Labels & Stickers": ["Name Labels", "Round Stickers", "Beverage Labels", "Foil Stickers", "Packaging Labels", "Metallic Stickers", "Health & Beauty Labels", "Mailing & Shipping Labels", "Product Labels", "Wine Labels", "Candle Labels", "Clear Stickers", "Address Labels", "Vinyl Stickers", "Food Labels", "Jar Labels", "Die Cut Stickers", "Bottle Labels", "Custom Stickers", "Business Stickers", "Hard Hat Stickers", "Custom Business Labels", "Kiss Cut Stickers", "Oval Labels", "Roll Labels", "Singles Cut To Size Labels", "Name Tag Stickers", "Sticker Sheets", "Water Bottle Stickers", "Cosmetic Labels", "Domed 3D Stickers", "Kiss Cut Labels", "Die Cut Labels", "Warning Labels", "Canning Labels", "Hexagon Stickers", "Cut To Size Singles", "Tile Stickers", "Custom Shape Labels", "Round Labels", "Shipping Labels", "Sheet Labels", "Domed 3D Labels", "Custom Labels", "Promotional Campaign Stickers", "Holographic Stickers", "Heart Stickers", "Metallic Labels", "Vinyl Labels", "Promotional Event Stickers", "Foil Labels", "Holographic Labels", "Sealing Stickers", "Bumper Stickers", "Paper Labels", "Custom Shape Stickers", "Clear Labels", "Waterproof Labels", "Square & Rectangle Stickers", "Discount Labels", "Front Adhesive Stickers", "CBD Stickers", "Custom Political Bumper Stickers", "Barcode Labels", "Christmas Stickers", "CBD Labels", "Custom Political Stickers", "Christmas Labels"],
+    "Printing Products": ["Plastic Durable Business Cards", "Packaging Tapes", "Foil Accent Business Cards", "Soft Touch Business Cards", "Variable Printing", "Raised Foil Business Cards", "Invitations", "Standard Business Card", "Embossed Gloss Business Cards", "Bookmarks", "Bubble Mailers", "Glossy Business Cards", "Flyers", "Table Cloths", "A-Frames", "Parking Sign", "Rectangle Flags", "Metal Signs", "Desk Name Plates", "Kraft Business Cards", "Round Corner Business Card", "Eco Friendly Business Cards", "Matte Business Cards", "Magnets", "Greeting Cards", "Booklets", "Painted Edge Business Cards", "Brochures", "Numbered Tickets", "Poly Mailers", "Angled Flags & Banners", "Wall Calendars", "Presentation Folders", "QR Code Business Cards", "Custom Postcard", "Pop Up Display", "Vinyl Banner", "Table Runners", "Step And Repeat Banners", "Signicades", "Banner Stands", "Wall Decals", "NFC Business Cards", "Stretch Table Covers", "Pull Up Banners", "Real Estate Sign", "Custom Floor Decals", "Tension Fabric Displays", "Plastic Signs", "Window Decals", "Way Finding Sign", "Car Door Decals", "Flag", "Custom Yard Signs", "Restroom Signs", "Car Window Decals", "Custom Tear Cards", "Ultra Thick Business Cards", "Door Hanger", "Clings", "Keychain", "Coaster", "Poster Boards", "Envelope", "Canopy Tents", "Mason Jars", "Folded Business Card", "Blister Cards", "Mouse Pad", "Photo Panels", "Plastics", "Bottles", "Linen Business Cards", "Mugs", "Tabletop Signs", "Floor Graphics", "Custom Political Brochures", "Custom Political Business Cards", "Custom Political Postcards", "3D Pop-Up Folding Business Cards with Character"]
+  };
+  const categories = CATS.map((name) => ({ id: uid("cat"), name, subs: [] }));
   const attributes = [
     { id: uid("at"), name: "Material", type: "single", options: ["Mylar", "Kraft", "Cardstock", "Corrugated"] },
     { id: uid("at"), name: "Finish", type: "single", options: ["Matte", "Gloss", "Soft-touch", "Spot UV"] },
@@ -103,36 +90,10 @@ function seedData() {
     { id: uid("at"), name: "Size", type: "multiple", options: ["Small", "Medium", "Large", "Custom"] },
     { id: uid("at"), name: "Add-ons", type: "multiple", options: ["Window", "Zipper", "Hang Hole", "Tear Notch"] }
   ];
-  const [mat, fin, moq, size, addon] = attributes;
-  const products = [
-    {
-      id: uid("p"),
-      name: "Custom Mylar Stand-up Pouch",
-      sku: "MYL-SUP-001",
-      status: "done",
-      categoryId: c1,
-      subId: categories[0].subs[0].id,
-      values: { [mat.id]: "Mylar", [fin.id]: "Matte", [moq.id]: "1000", [size.id]: ["Medium", "Large"], [addon.id]: ["Zipper", "Tear Notch"] }
-    },
-    {
-      id: uid("p"),
-      name: "CBD Oil Box",
-      sku: "BOX-CBD-014",
-      status: "pending",
-      categoryId: c2,
-      subId: categories[1].subs[2].id,
-      values: { [mat.id]: "Cardstock", [fin.id]: "Soft-touch", [moq.id]: "500", [size.id]: ["Small"], [addon.id]: [] }
-    },
-    {
-      id: uid("p"),
-      name: "Cosmetic Tuck Box",
-      sku: "BOX-COS-007",
-      status: "done",
-      categoryId: c2,
-      subId: categories[1].subs[0].id,
-      values: { [mat.id]: "Cardstock", [fin.id]: "Spot UV", [moq.id]: "2500", [size.id]: ["Custom"], [addon.id]: ["Window"] }
-    }
-  ];
+  const products = [];
+  categories.forEach((c) => (PRODUCT_NAMES[c.name] || []).forEach((n) => {
+    products.push({ id: uid("p"), name: n, sku: "", categoryId: c.id, subId: "", values: {}, status: "pending" });
+  }));
   return { categories, attributes, products };
 }
 const btn = "inline-flex items-center gap-1.5 rounded-md text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed";
